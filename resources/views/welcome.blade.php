@@ -13,6 +13,7 @@
         <!-- Styles -->
         <style>
             html, body {
+                background-image: url("/images/Iench.jpg");
                 background-color: #fff;
                 color: #636b6f;
                 font-family: 'Raleway', sans-serif;
