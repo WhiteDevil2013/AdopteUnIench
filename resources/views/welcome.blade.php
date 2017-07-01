@@ -83,8 +83,12 @@
                 </div>
 
                 <div class="links">
-                    <a href="http://homestead.app/login">Connexion</a>
-                    <a href="http://homestead.app/register">Inscription</a>
+                    @if (Auth::check())
+                        <a href="http://homestead.app/home">Accueil</a>
+                    @else
+                        <a href="http://homestead.app/login">Connexion</a>
+                        <a href="http://homestead.app/register">Inscription</a>
+                    @endif
                 </div>
             </div>
         </div>
