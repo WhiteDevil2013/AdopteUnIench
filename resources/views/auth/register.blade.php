@@ -98,8 +98,8 @@
 
                             <div class="col-md-6">
                                 <select id="sex" class="form-control" name="sex" required>
-                                    <option value='0'>Homme</option>
-                                    <option value='1'>Femme</option>
+                                    <option value='0'>Male</option>
+                                    <option value='1'>Femelle</option>
                                 </select>
                             </div>
                         </div>
