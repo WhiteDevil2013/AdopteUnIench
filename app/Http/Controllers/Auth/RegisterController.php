@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace AdopteUnIench\Http\Controllers\Auth;
 
-use App\User;
-use App\Http\Controllers\Controller;
+use AdopteUnIench\Profile;
+use AdopteUnIench\User;
+use AdopteUnIench\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -62,10 +63,24 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $profile = Profile::create([
+            'username' => $data['username'],
+            'isAnimal' => $data['race'] != 'human',
+            'race' => $data['race'],
+            'description' => $data['description'],
+            'birthDate' => $data['birthDate'],
+            'location' => $data['location'],
+            'profilePicture' => $data['profilePicture'],
+            'sex' => (int)$data['sex']
+        ]);
+
+        $profile->push();
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'profile_id' => $profile->id
         ]);
     }
 }
