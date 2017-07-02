@@ -54,7 +54,6 @@ class ProfileController extends Controller
             }
 
             $curProfile->race = $race;
-
             return view('profile/profile')->with('profile', $curProfile);
         }
     }

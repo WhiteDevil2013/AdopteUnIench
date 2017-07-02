@@ -11,16 +11,16 @@
                 <div class="panel-body">
                     <div class="col-md-8">
                         @if($profile->isAnimal)
-                            @if($profile->sexe)
-                                <p>{{ $profile->race }} mâle</p>
-                            @else
+                            @if($profile->sex)
                                 <p>{{ $profile->race }} femelle</p>
+                            @else
+                                <p>{{ $profile->race }} mâle</p>
                             @endif
                         @else
-                            @if($profile->sexe)
-                                <p>Homme</p>
-                            @else
+                            @if($profile->sex)
                                 <p>Femme</p>
+                            @else
+                                <p>Homme</p>
                             @endif
                         @endif
 
