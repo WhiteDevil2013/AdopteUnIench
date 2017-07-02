@@ -26,7 +26,7 @@ class AddUniqueConstraintOnUsernameProfile extends Migration
     public function down()
     {
         Schema::table('profiles', function (Blueprint $table) {
-            $table->string('username')->unique(false)->change();
+            $table->string('username')->change();
         });
     }
 }
