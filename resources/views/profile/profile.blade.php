@@ -17,9 +17,9 @@
                     <div class="col-md-8">
                         @if($profile->isAnimal)
                             @if($profile->sex)
-                                <p>{{ $profile->race }} femelle</p>
+                                <p>{{ $profile->race }} Femelle</p>
                             @else
-                                <p>{{ $profile->race }} mâle</p>
+                                <p>{{ $profile->race }} Mâle</p>
                             @endif
                         @else
                             @if($profile->sex)
