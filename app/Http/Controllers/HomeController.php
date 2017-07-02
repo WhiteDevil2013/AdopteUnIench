@@ -4,8 +4,10 @@ namespace AdopteUnIench\Http\Controllers;
 
 use Illuminate\Http\Request;
 use AdopteUnIench\Profile;
+use AdopteUnIench\Preference;
+use AdopteUnIench\PreferenceType;
 
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 
 class HomeController extends Controller
@@ -27,6 +29,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $preferences = Preference::where('profile_id', Auth::user()->profile_id)->first();
+
         return view('home', ['profiles' => Profile::all()]);
     }
 }

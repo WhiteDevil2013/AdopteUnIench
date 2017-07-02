@@ -30,16 +30,18 @@ class PreferenceController extends Controller
         $preference = Preference::create([
             'sex' => (int) $request->input('sex'),
             'location' => $request->input('location'),
-            'profile_id' => Profile::find(User::find(Auth::user()->id)->profile_id)->id
+            'profile_id' => Auth::user()->profile_id
         ]);
 
         $preference->push();
 
-        foreach ($request->input('races') as $race) {
-            PreferenceType::create([
-                'race' => $race,
-                'preference_id' => $preference->id
-            ])->push();
+        if ($request->input('races')) {
+            foreach ($request->input('races') as $race) {
+                PreferenceType::create([
+                    'race' => $race,
+                    'preference_id' => $preference->id
+                ])->push();
+            }
         }
 
         return redirect()->route('home');
@@ -55,11 +57,13 @@ class PreferenceController extends Controller
 
         PreferenceType::where('preference_id', $preference->id)->delete();
 
-        foreach ($request->input('races') as $race) {
-            PreferenceType::create([
-                'race' => $race,
-                'preference_id' => $preference->id
-            ])->push();
+        if ($request->input('races')) {
+            foreach ($request->input('races') as $race) {
+                PreferenceType::create([
+                    'race' => $race,
+                    'preference_id' => $preference->id
+                ])->push();
+            }
         }
 
         return redirect()->route('home');
