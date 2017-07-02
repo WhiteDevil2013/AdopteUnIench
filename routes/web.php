@@ -25,7 +25,7 @@ Route::get('/profile','ProfileController@index')->name('profile');
 
 Route::get('/profile/{id}', 'ProfileController@show')->name('profileShow');
 
-Route::get('/profile/edit/{id}', 'ProfileController@edit');
+Route::get('/profile/edit/{id}', 'ProfileController@edit')->name('profile.edit');
 
 Route::get('/preference', 'PreferenceController@index')->name('preference');
 Route::post('/preference/create', 'PreferenceController@create')->name('preferenceCreate');

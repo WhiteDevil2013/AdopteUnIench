@@ -79,7 +79,13 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        //
+        if (Auth::guest())
+            return view('auth.login');
+
+        $profile = Profile::find($id);
+        $profile->race = $this->tradRace($profile->race);
+
+        return view('profile/profile_edit')->with('profile', $profile);
     }
 
     /**
