@@ -8,7 +8,26 @@
                 <div class="panel-heading">Menu Principal</div>
 
                 <div class="panel-body">
-                    Vous êtes maintenant connecté !
+                    <h3>Ces profils peuvent vous interesser :</h3>
+                    <br />
+                    @foreach ($profiles as $profile)
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{ $profile->username }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-md-9">
+                                <p>{{ $profile->race }}</p>
+                                <p>{{ $profile->description }}</p>
+                                <p>Habite à {{ $profile->location }}</p>
+                            </div>
+                            <div class="col-md-3">
+                                <img src="data:image/jpeg;base64,{{ base64_encode(Storage::disk('images')->get($profile->profilePicture)) }}"
+                                     width="140" height="140" class="img-rounded">
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
