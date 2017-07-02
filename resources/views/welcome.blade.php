@@ -71,7 +71,12 @@
                 <div class="top-right links">
                     @if (Auth::check())
                         <a href="{{ url('/home') }}">Accueil</a>
-                        <a href="http://homestead.app/preference">Préférences</a>
+                        <a href="{{ url('/message') }}">Messages</a>
+                        <a href="{{ url('/profile') }}">Mon Profil</a>
+                        <a href="{{ url('/preference') }}">Mes Préférences</a>
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Déconnexion
+                        </a>
                     @else
                         <a href="{{ url('/login') }}">Connexion</a>
                         <a href="{{ url('/register') }}">Inscription</a>
@@ -80,17 +85,8 @@
             @endif
 
             <div class="content">
-                <div class="title m-b-md">
+                <div class="title m-b-md" style="color: white">
                     AdopteUnIench
-                </div>
-
-                <div class="links">
-                    @if (Auth::check())
-                        <a href="http://homestead.app/home">Accueil</a>
-                    @else
-                        <a href="http://homestead.app/login">Connexion</a>
-                        <a href="http://homestead.app/register">Inscription</a>
-                    @endif
                 </div>
             </div>
         </div>

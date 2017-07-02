@@ -30,3 +30,7 @@ Route::get('/profile/edit/{id}', 'ProfileController@edit')->name('profile.edit')
 Route::get('/preference', 'PreferenceController@index')->name('preference');
 Route::post('/preference/create', 'PreferenceController@create')->name('preferenceCreate');
 Route::post('/preference/update', 'PreferenceController@update')->name('preferenceUpdate');
+
+Route::get('/message', 'MessageController@index')->name('message');
+Route::get('/message/discuss', 'MessageController@discuss')->name('discuss');
+Route::post('/message/sendMessage', 'MessageController@sendMessage')->name('sendMessage');
