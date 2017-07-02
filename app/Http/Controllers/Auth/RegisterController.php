@@ -60,7 +60,7 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'username' => 'required|string|unique:profiles',
-            'birthDate' => 'required|date_format:"d/m/Y","Y-m-d"',
+            'birthDate' => 'required|date_format:"Y-m-d"',
         ]);
     }
 

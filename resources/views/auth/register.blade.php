@@ -122,7 +122,7 @@
                             <label for="birthDate" class="col-md-4 control-label">Date de naissance</label>
 
                             <div class="col-md-6">
-                                <input type="date" placeholder="JJ/MM/AAAA" id="birthDate" class="form-control" name="birthDate" value="{{ old('birthDate') }}" required autofocus>
+                                <input type="date" placeholder="aaaa-mm-jj" id="birthDate" class="form-control" name="birthDate" value="{{ old('birthDate') }}" required autofocus>
 
                                 @if ($errors->has('birthDate'))
                                 <span class="help-block">
