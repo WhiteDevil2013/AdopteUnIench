@@ -29,8 +29,31 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $preferences = Preference::where('profile_id', Auth::user()->profile_id)->first();
+        $profiles = Profile::all();
+        $user_profile = Profile::find(Auth::user()->profile_id);
+        $preference = Preference::where('profile_id', $user_profile->id)->first();
 
-        return view('home', ['profiles' => Profile::all()]);
+        $results = [];
+
+        // Check preferences for each
+        foreach ($profiles as $profile) {
+            if ($profile->sex == $preference->sex
+                && $profile->location == $preference->location
+                && $profile->isAnimal != $user_profile->isAnimal) {
+
+                if (!$user_profile->isAnimal) {
+                    $preference_types = PreferenceType::where('preference_id', $preference->id)->get();
+
+                    foreach($preference_types as $pref) {
+                        if ($pref->race == $profile->race)
+                            $results[] = $profile;
+                    }
+                }
+                else
+                    $results[] = $profile;
+            }
+        }
+
+        return view('home', ['profiles' => $results]);
     }
 }
