@@ -41,7 +41,7 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => '127.0.0.1',
+            'host' => 'localhost',
             'port' => '33060',
             'database' => 'homestead',
             'username' => 'homestead',
