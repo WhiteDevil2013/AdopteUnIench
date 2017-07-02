@@ -12,6 +12,7 @@
                     <h3>Ces profils peuvent vous intéresser :</h3>
                     <br />
                     @foreach ($profiles as $profile)
+                    @if ($profile->id != Auth::user()->profile_id)
                     <div class="panel panel-info">
                         <div class="panel-heading">
                             <h3 class="panel-title">
@@ -50,6 +51,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                     @endforeach
                 </div>
             </div>
