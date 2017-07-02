@@ -66,6 +66,10 @@
                                             Mon profil
                                         </a>
 
+                                        <a href="{{ route('preference') }}">
+                                            Préférences
+                                        </a>
+
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
