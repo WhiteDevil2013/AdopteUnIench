@@ -22,7 +22,7 @@ class PreferenceController extends Controller
         $preferences = Preference::where('profile_id', $profile_id)->first();
         if ($preferences)
             return view('preference/preference', ['race' => $profile->race, 'preferences' => $preferences]);
-        return view('preference/preference', ['race' => $profile->race]);
+        return view('preference/preference', ['race' => $profile->race, 'preferences' => '']);
     }
 
     protected function create(Request $request) {
