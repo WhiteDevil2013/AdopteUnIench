@@ -32,4 +32,5 @@ Route::post('/preference/create', 'PreferenceController@create')->name('preferen
 Route::post('/preference/update', 'PreferenceController@update')->name('preferenceUpdate');
 
 Route::get('/message', 'MessageController@index')->name('message');
-Route::post('/message/send', 'MessageController@send')->name('send');
+Route::get('/message/discuss', 'MessageController@discuss')->name('discuss');
+Route::post('/message/sendMessage', 'MessageController@sendMessage')->name('sendMessage');
