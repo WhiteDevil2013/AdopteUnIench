@@ -60,6 +60,7 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'username' => 'required|string|unique:profiles',
+            'birthDate' => 'required|date_format:"d/m/Y","Y-m-d"',
         ]);
     }
 
@@ -67,19 +68,21 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return User
+     * @return UserD
      */
     protected function create(array $data)
     {
         $imageHandler = new ImageHandler();
         $location = $imageHandler->uploadImageOnDisk($_FILES['profilePicture']);
 
+        $birthDate = $this->prepareBirthDate($data['birthDate']);
+
         $profile = Profile::create([
             'username' => $data['username'],
             'isAnimal' => $data['race'] != 'human',
             'race' => $data['race'],
             'description' => $data['description'],
-            'birthDate' => $data['birthDate'],
+            'birthDate' => $birthDate,
             'location' => $data['location'],
             'profilePicture' => $location,
             'sex' => (int)$data['sex']
@@ -93,5 +96,19 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
             'profile_id' => $profile->id
         ]);
+    }
+
+    protected function prepareBirthDate($birthDate) {
+        if (strptime($birthDate, '%d/%m/%Y')) {
+            $elements = explode('/', $birthDate);
+            if (count($elements) == 3) {
+                $day = $elements[0];
+                $month = $elements[1];
+                $year = $elements[2];
+                $newStr = $year . '-' . $month . '-' . $day;
+                $birthDate = $newStr;
+            }
+        }
+        return $birthDate;
     }
 }
