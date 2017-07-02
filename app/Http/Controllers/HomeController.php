@@ -5,6 +5,9 @@ namespace AdopteUnIench\Http\Controllers;
 use Illuminate\Http\Request;
 use AdopteUnIench\Profile;
 
+use Illuminate\Support\Facades\Storage;
+
+
 class HomeController extends Controller
 {
     /**
@@ -24,6 +27,11 @@ class HomeController extends Controller
      */
     public function index()
     {
+        /*$profiles = Profile::all();
+        foreach($profiles as $profile) {
+            $image = Storage::disk('images')->get($profile->profilePicture);
+            echo $image;
+        }*/
         return view('home', ['profiles' => Profile::all()]);
     }
 }
