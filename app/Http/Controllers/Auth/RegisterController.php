@@ -5,6 +5,13 @@ namespace AdopteUnIench\Http\Controllers\Auth;
 use AdopteUnIench\Profile;
 use AdopteUnIench\User;
 use AdopteUnIench\Http\Controllers\Controller;
+use Faker\Provider\Image;
+use AdopteUnIench\Http\ImageHandler;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManager;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -52,7 +59,7 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'username' => 'required|string|unique:profiles'
+            'username' => 'required|string|unique:profiles',
         ]);
     }
 
@@ -64,6 +71,9 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $imageHandler = new ImageHandler();
+        $location = $imageHandler->uploadImageOnDisk($_FILES['profilePicture']);
+
         $profile = Profile::create([
             'username' => $data['username'],
             'isAnimal' => $data['race'] != 'human',
@@ -71,7 +81,7 @@ class RegisterController extends Controller
             'description' => $data['description'],
             'birthDate' => $data['birthDate'],
             'location' => $data['location'],
-            'profilePicture' => $data['profilePicture'],
+            'profilePicture' => $location,
             'sex' => (int)$data['sex']
         ]);
 
