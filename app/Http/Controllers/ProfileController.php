@@ -24,34 +24,10 @@ class ProfileController extends Controller
             return view('auth.login');
         $user = Auth::user();
         $profile_id = $user->profile_id;
-        $curProfile = $this->show($profile_id);
+        $curProfile = Profile::findOrFail($profile_id);
         if (isset($curProfile))
         {
-            $race = "humain";
-            switch ($curProfile->race)
-            {
-                case "cat":
-                    $race = "chat";
-                    break;
-                case "dog":
-                    $race = "chien";
-                    break;
-                case "horse":
-                    $race = "cheval";
-                    break;
-                case "redpanda":
-                    $race = "panda roux";
-                    break;
-                case "turtle":
-                    $race = "tortue";
-                    break;
-                case "bird":
-                    $race = "oiseau";
-                    break;
-                case "mouse":
-                    $race = "souris";
-                    break;
-            }
+            $race = $this->tradRace($curProfile->race);
 
             $curProfile->race = $race;
             return view('profile/profile')->with('profile', $curProfile);
@@ -128,5 +104,35 @@ class ProfileController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function tradRace($race_eng) {
+        $race = "humain";
+        switch ($race_eng)
+        {
+            case "cat":
+                $race = "chat";
+                break;
+            case "dog":
+                $race = "chien";
+                break;
+            case "horse":
+                $race = "cheval";
+                break;
+            case "redpanda":
+                $race = "panda roux";
+                break;
+            case "turtle":
+                $race = "tortue";
+                break;
+            case "bird":
+                $race = "oiseau";
+                break;
+            case "mouse":
+                $race = "souris";
+                break;
+        }
+
+        return $race;
     }
 }
