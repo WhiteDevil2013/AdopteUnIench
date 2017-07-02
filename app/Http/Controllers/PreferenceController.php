@@ -42,7 +42,7 @@ class PreferenceController extends Controller
             ])->push();
         }
 
-        return view('home');
+        return redirect()->route('home');
     }
 
     protected function update(Request $request) {
@@ -61,6 +61,7 @@ class PreferenceController extends Controller
                 'preference_id' => $preference->id
             ])->push();
         }
-        return view('home');
+
+        return redirect()->route('home');
     }
 }

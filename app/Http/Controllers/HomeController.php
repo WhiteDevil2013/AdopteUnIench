@@ -27,11 +27,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        /*$profiles = Profile::all();
-        foreach($profiles as $profile) {
-            $image = Storage::disk('images')->get($profile->profilePicture);
-            echo $image;
-        }*/
         return view('home', ['profiles' => Profile::all()]);
     }
 }

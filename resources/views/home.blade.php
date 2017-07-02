@@ -8,7 +8,7 @@
                 <div class="panel-heading">Menu Principal</div>
 
                 <div class="panel-body">
-                    <h3>Ces profils peuvent vous interesser :</h3>
+                    <h3>Ces profils peuvent vous intéresser :</h3>
                     <br />
                     @foreach ($profiles as $profile)
                     <div class="panel panel-info">
