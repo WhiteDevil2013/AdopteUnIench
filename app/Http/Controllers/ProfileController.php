@@ -2,12 +2,16 @@
 
 namespace AdopteUnIench\Http\Controllers;
 
-use Illuminate\Http\Request;
+use AdopteUnIench\Profile;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
+
+    private $errMsg;
 
     /**
      * Display a listing of the resource.
@@ -17,10 +21,14 @@ class ProfileController extends Controller
     public function index()
     {
         if (Auth::guest())
-        {
             return view('auth.login');
+        $user = Auth::user();
+        $profile_id = $user->profile_id;
+        $curProfile = $this->show($profile_id);
+        if (isset($curProfile))
+        {
+            return view('profile/profile')->with('profile', $curProfile);
         }
-        return view('profile/profile');
     }
 
     /**
@@ -51,7 +59,15 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        //
+        try
+        {
+            $profile = Profile::findOrFail($id);
+            return $profile;
+        }
+        catch (ModelNotFoundException $e)
+        {
+            return null;
+        }
     }
 
     /**
