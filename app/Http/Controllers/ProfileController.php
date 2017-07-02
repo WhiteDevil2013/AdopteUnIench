@@ -27,6 +27,34 @@ class ProfileController extends Controller
         $curProfile = $this->show($profile_id);
         if (isset($curProfile))
         {
+            $race = "humain";
+            switch ($curProfile->race)
+            {
+                case "cat":
+                    $race = "chat";
+                    break;
+                case "dog":
+                    $race = "chien";
+                    break;
+                case "horse":
+                    $race = "cheval";
+                    break;
+                case "redpanda":
+                    $race = "panda roux";
+                    break;
+                case "turtle":
+                    $race = "tortue";
+                    break;
+                case "bird":
+                    $race = "oiseau";
+                    break;
+                case "mouse":
+                    $race = "souris";
+                    break;
+            }
+
+            $curProfile->race = $race;
+
             return view('profile/profile')->with('profile', $curProfile);
         }
     }
