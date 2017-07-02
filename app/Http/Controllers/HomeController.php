@@ -35,23 +35,31 @@ class HomeController extends Controller
 
         $results = [];
 
-        // Check preferences for each
-        foreach ($profiles as $profile) {
-            if ($profile->sex == $preference->sex
-                && $profile->location == $preference->location
-                && $profile->isAnimal != $user_profile->isAnimal) {
+        if ($preference) {
 
-                if (!$user_profile->isAnimal) {
-                    $preference_types = PreferenceType::where('preference_id', $preference->id)->get();
+            // Check preferences for each
+            foreach ($profiles as $profile) {
+                if ($profile->sex == $preference->sex
+                    && $profile->location == $preference->location
+                    && $profile->isAnimal != $user_profile->isAnimal) {
 
-                    foreach($preference_types as $pref) {
-                        if ($pref->race == $profile->race)
-                            $results[] = $profile;
+                    if (!$user_profile->isAnimal) {
+                        $preference_types = PreferenceType::where('preference_id', $preference->id)->get();
+
+                        foreach($preference_types as $pref) {
+                            if ($pref->race == $profile->race)
+                                $results[] = $profile;
+                        }
                     }
+                    else
+                        $results[] = $profile;
                 }
-                else
-                    $results[] = $profile;
             }
+        }
+        else {
+            foreach ($profiles as $profile)
+                if ($profile->isAnimal != $user_profile->isAnimal)
+                    $results[] = $profile;
         }
 
         return view('home', ['profiles' => $results]);
