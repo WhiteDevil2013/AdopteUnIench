@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Messagerie</div>
+                <div class="panel-heading">Conversation avec {{ $friend_profile->username }}</div>
                 <div class="panel-body">
 
                     <div style="max-height: 550px; overflow-x: auto;">

@@ -66,6 +66,10 @@
                                             Mon profil
                                         </a>
 
+                                        <a href="{{ route('message') }}">
+                                            Messages
+                                        </a>
+
                                         <a href="{{ route('preference') }}">
                                             Préférences
                                         </a>
