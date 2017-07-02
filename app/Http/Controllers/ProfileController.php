@@ -62,15 +62,13 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        try
-        {
-            $profile = Profile::findOrFail($id);
-            return $profile;
-        }
-        catch (ModelNotFoundException $e)
-        {
-            return null;
-        }
+        if (Auth::guest())
+            return view('auth.login');
+
+        $profile = Profile::find($id);
+        $profile->race = $this->tradRace($profile->race);
+
+        return view('profile/profile')->with('profile', $profile);
     }
 
     /**
@@ -106,30 +104,30 @@ class ProfileController extends Controller
         //
     }
 
-    public function tradRace($race_eng) {
-        $race = "humain";
+    public static function tradRace($race_eng) {
+        $race = "Humain";
         switch ($race_eng)
         {
             case "cat":
-                $race = "chat";
+                $race = "Chat";
                 break;
             case "dog":
-                $race = "chien";
+                $race = "Chien";
                 break;
             case "horse":
-                $race = "cheval";
+                $race = "Cheval";
                 break;
             case "redpanda":
-                $race = "panda roux";
+                $race = "Panda-Roux";
                 break;
             case "turtle":
-                $race = "tortue";
+                $race = "Tortue";
                 break;
             case "bird":
-                $race = "oiseau";
+                $race = "Oiseau";
                 break;
             case "mouse":
-                $race = "souris";
+                $race = "Souris";
                 break;
         }
 

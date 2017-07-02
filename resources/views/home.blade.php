@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<?php use AdopteUnIench\Http\Controllers\ProfileController;?>
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -24,15 +25,17 @@
                         </div>
                         <div class="panel-body">
                             <div class="col-md-9">
-                                <p>{{ $profile->race }}</p>
+                                <p><strong>{{ ProfileController::tradRace($profile->race) }}</strong></p>
                                 <p>{{ $profile->description }}</p>
                                 <p>Habite à {{ $profile->location }}</p>
                                 <br />
                                 <div class="row">
                                 <div class="col-md-2">
-                                    <button type="submit" class="btn btn-info">
-                                        Voir plus
-                                    </button>
+                                    <form method="GET" action="{{ route('profileShow', $profile->id) }}">
+                                        <button type="submit" class="btn btn-info">
+                                            Voir plus
+                                        </button>
+                                    </form>
                                 </div>
                                 <div class="col-md-2">
                                     <button type="submit" class="btn btn-info">
