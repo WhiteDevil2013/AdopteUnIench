@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Préférences</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="@if($preferences) {{ route('preferenceUpdate') }} @else {{ route('preferenceCreate') }} @endif" enctype="multipart/form-data">
+                    <form class="form-horizontal" method="POST" action="@if($preferences != '') {{ route('preferenceUpdate') }} @else {{ route('preferenceCreate') }} @endif" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
                         @if ($race == 'human')
@@ -33,8 +33,8 @@
 
                             <div class="col-md-6">
                                 <select id="sex" class="form-control" name="sex" required>
-                                    <option {{ $preferences->sex == 0 ? 'selected' : '' }} value='0'>Male</option>
-                                    <option {{ $preferences->sex == 1 ? 'selected' : '' }} value='1'>Femelle</option>
+                                    <option {{ $preferences != '' ? ($preferences->sex == 0 ? 'selected' : '') : '' }} value='0'>Male</option>
+                                    <option {{ $preferences != '' ? ($preferences->sex == 1 ? 'selected' : '') : '' }} value='1'>Femelle</option>
                                 </select>
                             </div>
                         </div>
@@ -43,7 +43,7 @@
                             <label for="location" class="col-md-4 control-label">Ville</label>
 
                             <div class="col-md-6">
-                                <input type="text" id="location" class="form-control" name="location" value="{{ $preferences->location }}" required autofocus>
+                                <input type="text" id="location" class="form-control" name="location" value="{{ $preferences != '' ? $preferences->location : ''}}" required autofocus>
 
                                 @if ($errors->has('location'))
                                 <span class="help-block">
