@@ -11,7 +11,7 @@
                 <div class="panel-body">
                     <div class="col-md-8">
                         @if($profile->isAnimal)
-                            @if($profile->sexe)
+                            @if(!$profile->sexe)
                                 <p>{{ $profile->race }} mâle</p>
                             @else
                                 <p>{{ $profile->race }} femelle</p>
