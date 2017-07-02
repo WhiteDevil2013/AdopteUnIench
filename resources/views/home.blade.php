@@ -13,7 +13,14 @@
                     @foreach ($profiles as $profile)
                     <div class="panel panel-info">
                         <div class="panel-heading">
-                            <h3 class="panel-title">{{ $profile->username }}</h3>
+                            <h3 class="panel-title">
+                                {{ $profile->username }}
+                                @if ($profile->sex == 0)
+                                    <img src="images/male.svg" width="10" height="10">
+                                @else
+                                    <img src="images/female.svg" width="10" height="10">
+                                @endif
+                            </h3>
                         </div>
                         <div class="panel-body">
                             <div class="col-md-9">
