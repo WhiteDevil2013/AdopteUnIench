@@ -42,6 +42,14 @@ class MessageController extends Controller
 
         $profile_id = User::find(Auth::user()->id)->profile_id;
 
+        $matches_1 = Match::where('profile_id_1', $profile_id)->pluck('profile_id_2')->toArray();
+        $matches_2 = Match::where('profile_id_2', $profile_id)->pluck('profile_id_1')->toArray();
+
+        $matches = array_merge($matches_1, $matches_2);
+
+        if ($friend_profile_id == $profile_id || !in_array($friend_profile_id, $matches))
+            return redirect()->to('/message');
+
         $messages_1 = Message::where([['receiver_id', $profile_id], ['sender_id', $friend_profile_id]])->get();
         $messages_2 = Message::where([['sender_id', $profile_id], ['receiver_id', $friend_profile_id]])->get();
 
@@ -69,7 +77,6 @@ class MessageController extends Controller
         ])->push();
 
         return back();
-
     }
 
     private function cmp ($a, $b) {

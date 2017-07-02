@@ -71,7 +71,7 @@
                 <div class="top-right links">
                     @if (Auth::check())
                         <a href="{{ url('/home') }}">Accueil</a>
-                        <a href="http://homestead.app/preference">Préférences</a>
+                        <a href="{{ url('/message') }}">Messages</a>
                     @else
                         <a href="{{ url('/login') }}">Connexion</a>
                         <a href="{{ url('/register') }}">Inscription</a>
