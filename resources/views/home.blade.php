@@ -20,6 +20,19 @@
                                 <p>{{ $profile->race }}</p>
                                 <p>{{ $profile->description }}</p>
                                 <p>Habite à {{ $profile->location }}</p>
+                                <br />
+                                <div class="row">
+                                <div class="col-md-2">
+                                    <button type="submit" class="btn btn-info">
+                                        Voir plus
+                                    </button>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="submit" class="btn btn-info">
+                                        Matcher
+                                    </button>
+                                </div>
+                                </div>
                             </div>
                             <div class="col-md-3">
                                 <img src="data:image/jpeg;base64,{{ base64_encode(Storage::disk('images')->get($profile->profilePicture)) }}"
