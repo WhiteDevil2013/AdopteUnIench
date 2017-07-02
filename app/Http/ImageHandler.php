@@ -1,6 +1,7 @@
 <?php
 
 namespace AdopteUnIench\Http;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Created by IntelliJ IDEA.
@@ -45,8 +46,7 @@ class ImageHandler
         $imageData = addslashes($fileToUpload['tmp_name']);
         $imageData = file_get_contents($imageData);
         $imageName = addslashes($fileToUpload['name']);
-        $location = __DIR__.'/images/' . $imageName;
-        file_put_contents($location, $imageData);
-        return $location;
+        Storage::disk('images')->put($imageName, $imageData);
+        return $imageName;
     }
 }
