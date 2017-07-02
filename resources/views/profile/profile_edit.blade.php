@@ -30,9 +30,48 @@
                             @endif
                         @endif
 
-                        <p>{{ $profile->description }}</p>
-                        <p>Habite à {{ $profile->location }}</p>
-                        <p>Né le {{ $profile->birthDate }}</p>
+                        <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
+                            <label for="description" class="col-md-4 control-label">Description</label>
+
+                            <div class="col-md-6">
+                                <textarea style="resize: none" id="description" class="form-control" name="description" cols="50" rows="10" required autofocus>{{ old('description') }}</textarea>
+
+                                @if ($errors->has('description'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('description') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('location') ? ' has-error' : '' }}">
+                            <label for="location" class="col-md-4 control-label">Ville</label>
+
+                            <div class="col-md-6">
+                                <input type="text" id="location" class="form-control" name="location" value="{{ old('location') }}" required autofocus>
+
+                                @if ($errors->has('location'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('location') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group{{ $errors->has('birthDate') ? ' has-error' : '' }}">
+                            <label for="birthDate" class="col-md-4 control-label">Date de naissance</label>
+
+                            <div class="col-md-6">
+                                <input type="date" placeholder="jj/mm/aaaa" id="birthDate" class="form-control" name="birthDate" value="{{ old('birthDate') }}" required autofocus>
+
+                                @if ($errors->has('birthDate'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('birthDate') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                     </div>
                     <div class="col-md-4">
                         <img src="data:image/jpeg;base64,{{ base64_encode(Storage::disk('images')->get($profile->profilePicture)) }}"

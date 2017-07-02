@@ -31,7 +31,11 @@
 
                         <p>{{ $profile->description }}</p>
                         <p>Habite à {{ $profile->location }}</p>
-                        <p>Né le {{ $profile->birthDate }}</p>
+                        @if($profile->sex)
+                            <p>Née le {{ $profile->birthDate }}</p>
+                        @else
+                            <p>Né le {{ $profile->birthDate }}</p>
+                        @endif
                     </div>
                     <div class="col-md-4">
                         <img src="data:image/jpeg;base64,{{ base64_encode(Storage::disk('images')->get($profile->profilePicture)) }}"
