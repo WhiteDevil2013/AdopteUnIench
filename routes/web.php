@@ -11,6 +11,9 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -18,3 +21,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/preference', 'PreferenceController@index')->name('preference');
+Route::post('/preference/create', 'PreferenceController@create')->name('preferenceCreate');
+Route::post('/preference/update', 'PreferenceController@update')->name('preferenceUpdate');
