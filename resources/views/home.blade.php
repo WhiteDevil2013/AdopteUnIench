@@ -31,18 +31,42 @@
                                 <p>Habite à {{ $profile->location }}</p>
                                 <br />
                                 <div class="row">
-                                <div class="col-md-2">
-                                    <form method="GET" action="{{ route('profileShow', $profile->id) }}">
-                                        <button type="submit" class="btn btn-info">
-                                            Voir plus
-                                        </button>
-                                    </form>
-                                </div>
-                                <div class="col-md-2">
-                                    <button type="submit" class="btn btn-info">
-                                        Matcher
-                                    </button>
-                                </div>
+                                    <div class="col-md-2">
+                                        <form method="GET" action="{{ route('profileShow', $profile->id) }}">
+                                            <button type="submit" class="btn btn-info">
+                                                Voir plus
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-2">
+                                        @if (in_array($profile->id, $notMatched))
+                                        <form method="POST" action="{{ route('deleteMatch',  $profile->id) }}" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
+                                            <button type="submit" class="btn btn-warning">
+                                                En attente de match !
+                                            </button>
+                                        </form>
+                                        @else
+                                        @if (in_array($profile->id, $matches))
+                                        <form class="form-horizontal" method="GET" action="{{ route('discuss') }}" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
+
+                                            <input type="hidden" name="profile_id" id="profile_id" value="{{ $profile->id }}">
+
+                                            <button type="submit" class="btn btn-success">
+                                                Discuter
+                                            </button>
+                                        </form>
+                                        @else
+                                        <form method="POST" action="{{ route('profileMatch',  $profile->id) }}" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
+                                            <button type="submit" class="btn btn-info">
+                                                Matcher
+                                            </button>
+                                        </form>
+                                        @endif
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-3">

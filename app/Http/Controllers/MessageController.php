@@ -17,8 +17,8 @@ class MessageController extends Controller
 
         $profile_id = User::find(Auth::user()->id)->profile_id;
 
-        $matches_1 = Match::where('profile_id_1', $profile_id)->pluck('profile_id_2')->toArray();
-        $matches_2 = Match::where('profile_id_2', $profile_id)->pluck('profile_id_1')->toArray();
+        $matches_1 = Match::where([['profile_id_1', $profile_id], ['hasMatched', 1]])->pluck('profile_id_2')->toArray();
+        $matches_2 = Match::where([['profile_id_2', $profile_id], ['hasMatched', 1]])->pluck('profile_id_1')->toArray();
 
         $messages_1 = Message::where('receiver_id', $profile_id)->pluck('sender_id')->toArray();
         $messages_2 = Message::where('sender_id', $profile_id)->pluck('receiver_id')->toArray();
@@ -42,8 +42,8 @@ class MessageController extends Controller
 
         $profile_id = User::find(Auth::user()->id)->profile_id;
 
-        $matches_1 = Match::where('profile_id_1', $profile_id)->pluck('profile_id_2')->toArray();
-        $matches_2 = Match::where('profile_id_2', $profile_id)->pluck('profile_id_1')->toArray();
+        $matches_1 = Match::where([['profile_id_1', $profile_id], ['hasMatched', 1]])->pluck('profile_id_2')->toArray();
+        $matches_2 = Match::where([['profile_id_2', $profile_id], ['hasMatched', 1]])->pluck('profile_id_1')->toArray();
 
         $matches = array_merge($matches_1, $matches_2);
 
@@ -71,10 +71,20 @@ class MessageController extends Controller
     protected function sendMessage(Request $request) {
 
         Message::create([
-            'sender_id' =>  User::find(Auth::user()->id)->profile_id,
+            'sender_id' =>  Auth::user()->profile_id,
             'receiver_id' => (int) $request->input('friend_id'),
             'message' => $request->input('message')
         ])->push();
+
+        return back();
+    }
+
+    protected function delete(Request $request) {
+        $unfriend_id = (int) $request->profile_id;
+        $profile_id = Auth::user()->profile_id;
+
+        Match::where([['profile_id_1', $unfriend_id], ['hasMatched', 1], ['profile_id_2', $profile_id]])->orWhere([['profile_id_1', $profile_id], ['profile_id_2', $unfriend_id], ['hasMatched', 1]])->delete();
+        Message::where([['receiver_id', $profile_id], ['sender_id', $unfriend_id]])->orWhere([['receiver_id', $unfriend_id], ['sender_id', $profile_id]])->delete();
 
         return back();
     }

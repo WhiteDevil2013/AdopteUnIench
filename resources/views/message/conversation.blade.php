@@ -8,7 +8,7 @@
                 <div class="panel-heading">Conversation avec {{ $friend_profile->username }}</div>
                 <div class="panel-body">
 
-                    <div style="max-height: 550px; overflow-x: auto;">
+                    <div style="max-height: 530px; overflow-x: auto;">
                         @foreach ($messages as $msg)
                             @if ($msg->sender_id == $profile->id)
                                 <div class="panel panel-success">

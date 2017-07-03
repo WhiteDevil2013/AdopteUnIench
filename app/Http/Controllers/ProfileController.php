@@ -2,8 +2,10 @@
 
 namespace AdopteUnIench\Http\Controllers;
 
+use AdopteUnIench\Match;
 use AdopteUnIench\Profile;
 
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -138,5 +140,38 @@ class ProfileController extends Controller
         }
 
         return $race;
+    }
+
+    protected function match($id)
+    {
+        if (Auth::guest())
+            return view('auth.login');
+        $profile_id = Auth::user()->profile_id;
+        if ($id == $profile_id)
+            return redirect()->to('/home');
+
+        $notMatched = Match::where([['profile_id_1', $id], ['hasMatched', 0], ['profile_id_2', $profile_id]])->first();
+
+        if (!empty($notMatched)) {
+            echo 'KOKO';
+            Match::where([['profile_id_1', $id], ['hasMatched', 0], ['profile_id_2', $profile_id]])->update(array('hasMatched' => 1));
+        }
+        else {
+            echo 'OKOK';
+            Match::create([
+                'profile_id_1' => $profile_id,
+                'profile_id_2' => $id,
+                'hasMatched' => 0
+            ])->push();
+        }
+
+        return back();
+    }
+
+    protected function deleteMatch($unfriend_id) {
+        $profile_id = Auth::user()->profile_id;
+        Match::where([['profile_id_1', $unfriend_id], ['hasMatched', 0], ['profile_id_2', $profile_id]])->orWhere([['profile_id_1', $profile_id], ['profile_id_2', $unfriend_id], ['hasMatched', 0]])->delete();
+
+        return back();
     }
 }

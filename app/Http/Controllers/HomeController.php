@@ -2,6 +2,7 @@
 
 namespace AdopteUnIench\Http\Controllers;
 
+use AdopteUnIench\Match;
 use Illuminate\Http\Request;
 use AdopteUnIench\Profile;
 use AdopteUnIench\Preference;
@@ -62,6 +63,13 @@ class HomeController extends Controller
                     $results[] = $profile;
         }
 
-        return view('home', ['profiles' => $results]);
+        $notMatched = Match::where([['profile_id_1', Auth::user()->profile_id], ['hasMatched', 0]])->pluck('profile_id_2')->toArray();
+
+        $matched_1 = Match::where([['profile_id_1', Auth::user()->profile_id], ['hasMatched', 1]])->pluck('profile_id_2')->toArray();
+        $matched_2 = Match::where([['profile_id_2', Auth::user()->profile_id], ['hasMatched', 1]])->pluck('profile_id_1')->toArray();
+
+        $matches = array_merge($matched_1, $matched_2);
+
+        return view('home', ['profiles' => $results, 'notMatched' => $notMatched, 'matches' => $matches]);
     }
 }

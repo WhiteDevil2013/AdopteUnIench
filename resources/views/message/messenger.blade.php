@@ -17,8 +17,7 @@
                                 <div class="col-md-9">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <form class="form-horizontal" method="GET" action="{{ route('discuss') }}" enctype="multipart/form-data">
-                                                {{ csrf_field() }}
+                                            <form method="GET" action="{{ route('profileShow', $conv->id) }}">
 
                                                 <input type="hidden" name="profile_id" id="profile_id" value="{{ $conv->id }}">
 
@@ -33,14 +32,17 @@
 
                                                 <input type="hidden" name="profile_id" id="profile_id" value="{{ $conv->id }}">
 
-                                                <button type="submit" class="btn btn-info">
+                                                <button type="submit" class="btn btn-success">
                                                     Discuter
                                                 </button>
                                             </form>
                                         </div>
                                         <div>
-                                            <form class="form-horizontal" method="GET" action="{{ route('discuss') }}" enctype="multipart/form-data">
+                                            <form class="form-horizontal" method="POST" action="{{ route('delete') }}" enctype="multipart/form-data">
                                                 {{ csrf_field() }}
+
+                                                <input type="hidden" name="profile_id" id="profile_id" value="{{ $conv->id }}">
+
                                                 <button type="submit" class="btn btn-danger">
                                                     Supprimer
                                                 </button>
