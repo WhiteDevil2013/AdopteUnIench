@@ -5,8 +5,6 @@ namespace AdopteUnIench\Http\Controllers;
 use AdopteUnIench\Match;
 use AdopteUnIench\Profile;
 
-use GuzzleHttp\Psr7\Request;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 
@@ -102,7 +100,7 @@ class ProfileController extends Controller
     {
         if (Auth::guest())
             return view('auth.login');
-        
+
         $user = Auth::user();
         $profile_id = $user->profile_id;
 
@@ -113,18 +111,24 @@ class ProfileController extends Controller
         if ($race == "human")
             $isAnimal = 0;
 
-        $profile->update([
-            'username' => input::get('username'),
-            'race' =>  input::get('race'),
-            'isAnimal' => $isAnimal,
-            'sex' => input::get('sex'),
-            'description' => input::get('description'),
-            'location' => input::get('location'),
-            'birthDate' => input::get('birthDate'),
-            'profilePicture' => $profile->profilePicture
-        ]);
+        if(preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",input::get('birthDate')))
+        {
+            $profile->update([
+                'username' => input::get('username'),
+                'race' =>  input::get('race'),
+                'isAnimal' => $isAnimal,
+                'sex' => input::get('sex'),
+                'description' => input::get('description'),
+                'location' => input::get('location'),
+                'birthDate' => input::get('birthDate'),
+                'profilePicture' => $profile->profilePicture
+            ]);
 
-        return $this->index();
+            return redirect()->to('/profile');
+        }
+        return redirect()->to('/profile/edit');
+
+
     }
 
     /**

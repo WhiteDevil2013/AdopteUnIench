@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="col-md-12 form-group{{ $errors->has('birthDate') ? ' has-error' : '' }}">
                                     <label class="control-label">Date de naissance</label>
-                                    <input type="date" placeholder="jj/mm/aaaa" id="birthDate" class="form-control" name="birthDate" value="{{ $profile->birthDate }}" required autofocus><br/>
+                                    <input type="date" placeholder="aaaa-mm-jj" id="birthDate" class="form-control" name="birthDate" value="{{ $profile->birthDate }}" required autofocus><br/>
                                     @if ($errors->has('birthDate'))
                                         <span class="help-block">
                                             <strong>{{ $errors->first('date') }}</strong>
