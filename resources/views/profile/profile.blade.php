@@ -9,7 +9,7 @@
                     <h3 class="panel-title">
                         {{ $profile->username }}
                         @if($profile->id == $user_profile_id)
-                            <a href="{{ route('profile.edit', $profile->id) }}">
+                            <a href="{{ route('profileEdit') }}">
                                 <img src="{{ URL::to('/') }}/images/edit.svg" width="15" height="15">
                             </a>
                         @endif

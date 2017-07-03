@@ -63,39 +63,34 @@ class ProfileController extends Controller
     {
         if (Auth::guest())
             return view('auth.login');
-        $user = Auth::user();
-        $profile_id = $user->profile_id;
+        if (isset($id))
+        {
+            $user = Auth::user();
+            $profile_id = $user->profile_id;
 
-        $profile = Profile::find($id);
-        $profile->race = $this->tradRace($profile->race);
+            $profile = Profile::find($id);
+            $profile->race = $this->tradRace($profile->race);
 
-        return view('profile/profile')->with(['profile' => $profile, 'user_profile_id' => $profile_id]);
+            return view('profile/profile')->with(['profile' => $profile, 'user_profile_id' => $profile_id]);
+        }
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
      * @return Response
      */
-    public function edit($id)
+    public function edit()
     {
         if (Auth::guest())
             return view('auth.login');
         $user = Auth::user();
         $profile_id = $user->profile_id;
-        if ($profile_id == $id)
-        {
-            $profile = Profile::find($id);
-            $profile->race = $this->tradRace($profile->race);
+        $profile = Profile::find($profile_id);
+        $profile->race = $this->tradRace($profile->race);
 
-            return view('profile/profile_edit')->with('profile', $profile);
-        }
-        else
-        {
-            abort(403, 'Erreur. Vous n\'êtes pas le propriétaire de ce profil!');
-        }
-
+        return view('profile/profile_edit')->with('profile', $profile);
     }
 
     /**
@@ -107,7 +102,7 @@ class ProfileController extends Controller
     {
         if (Auth::guest())
             return view('auth.login');
-
+        
         $user = Auth::user();
         $profile_id = $user->profile_id;
 
@@ -128,9 +123,6 @@ class ProfileController extends Controller
             'birthDate' => input::get('birthDate'),
             'profilePicture' => $profile->profilePicture
         ]);
-        print($race);
-        print($profile->race);
-        print($profile->sex);
 
         return $this->index();
     }

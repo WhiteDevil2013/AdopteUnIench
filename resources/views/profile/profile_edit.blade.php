@@ -17,10 +17,6 @@
                                     </span>
                                 @endif
                             </div>
-                            <div class="col-md-3">
-                                <button style="max-width: 50px; max-height: 50px;"><img src="{{ URL::to('/') }}/images/validate.svg"/></button>
-                                <button style="max-width: 50px; max-height: 50px;"><img src="{{ URL::to('/') }}/images/delete.svg"/></button>
-                            </div>
                         </h3><br/><br/>
                     </div>
                     <div class="panel-body">
@@ -89,6 +85,11 @@
                             <img src="data:image/jpeg;base64,{{ base64_encode(Storage::disk('images')->get($profile->profilePicture)) }}"
                                  alt="Profile Image" width="200" height="200" class="img-rounded">
                         </div>
+                        <div class="col-md-12" style="justify-content: center; display:flex;">
+                            <button type="submit" class="btn btn-success" style="margin-right: 10px;">Valider</button>
+                            <button type="button" class="btn btn-warning" onclick='window.location="{{ route("profile") }}"'>Retour</button>
+                        </div>
+
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     </div>
                 </div>
