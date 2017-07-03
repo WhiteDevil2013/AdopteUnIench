@@ -23,6 +23,10 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/profile','ProfileController@index')->name('profile');
+Route::post('/profile','ProfileController@update')->name('profile');
+
+
+Route::get('/profile','ProfileController@index')->name('profile');
 Route::get('/profile/{id}', 'ProfileController@show')->name('profileShow');
 Route::get('/profile/edit/{id}', 'ProfileController@edit')->name('profile.edit');
 Route::post('/profile/match/{id}', 'ProfileController@match')->name('profileMatch');

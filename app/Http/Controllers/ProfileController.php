@@ -8,13 +8,10 @@ use AdopteUnIench\Profile;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Input;
 
 class ProfileController extends Controller
 {
-
-    private $errMsg;
-
     /**
      * Display a listing of the resource.
      *
@@ -93,12 +90,39 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
      * @return Response
      */
-    public function update($id)
+    public function update()
     {
-        //
+        if (Auth::guest())
+            return view('auth.login');
+
+        $user = Auth::user();
+        $profile_id = $user->profile_id;
+
+        $profile = Profile::find($profile_id);
+
+        $race = input::get('race');
+        $isAnimal = 1;
+        if ($race == "human")
+            $isAnimal = 0;
+
+        $profile->update([
+            'username' => input::get('username'),
+            'race' =>  input::get('race'),
+            'isAnimal' => $isAnimal,
+            'sex' => input::get('sex'),
+            'description' => input::get('description'),
+            'location' => input::get('location'),
+            'birthDate' => input::get('birthDate'),
+            'profilePicture' => $profile->profilePicture
+        ]);
+        print($race);
+        print($profile->race);
+        print($profile->sex);
+
+//        return view('profile/profile')->with('profile', $profile);
+        return $this->index();
     }
 
     /**
