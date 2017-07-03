@@ -121,7 +121,6 @@ class ProfileController extends Controller
         print($profile->race);
         print($profile->sex);
 
-//        return view('profile/profile')->with('profile', $profile);
         return $this->index();
     }
 
