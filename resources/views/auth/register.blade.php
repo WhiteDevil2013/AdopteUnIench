@@ -122,7 +122,7 @@
                             <label for="description" class="col-md-4 control-label">Description</label>
 
                             <div class="col-md-6">
-                                <textarea style="resize: none" id="description" class="form-control" name="description" cols="50" rows="10" required autofocus>{{ old('description') }}</textarea>
+                                <textarea style="resize: none" id="description" class="form-control" name="description" cols="50" rows="5" maxlength="250" required autofocus>{{ old('description') }}</textarea>
 
                                 @if ($errors->has('description'))
                                 <span class="help-block">
