@@ -8,9 +8,11 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">
                         {{ $profile->username }}
-                        <a href="{{ route('profile.edit', $profile->id) }}">
-                            <img src="{{ URL::to('/') }}/images/edit.svg" width="15" height="15">
-                        </a>
+                        @if($profile->id == $user_profile_id)
+                            <a href="{{ route('profile.edit', $profile->id) }}">
+                                <img src="{{ URL::to('/') }}/images/edit.svg" width="15" height="15">
+                            </a>
+                        @endif
                     </h3>
                 </div>
                 <div class="panel-body">

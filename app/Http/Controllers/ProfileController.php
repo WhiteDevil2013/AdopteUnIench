@@ -29,7 +29,7 @@ class ProfileController extends Controller
             $race = $this->tradRace($curProfile->race);
 
             $curProfile->race = $race;
-            return view('profile/profile')->with('profile', $curProfile);
+            return view('profile/profile')->with(['profile' => $curProfile, 'user_profile_id' => $profile_id]);
         }
     }
 
@@ -63,11 +63,13 @@ class ProfileController extends Controller
     {
         if (Auth::guest())
             return view('auth.login');
+        $user = Auth::user();
+        $profile_id = $user->profile_id;
 
         $profile = Profile::find($id);
         $profile->race = $this->tradRace($profile->race);
 
-        return view('profile/profile')->with('profile', $profile);
+        return view('profile/profile')->with(['profile' => $profile, 'user_profile_id' => $profile_id]);
     }
 
     /**
@@ -80,11 +82,20 @@ class ProfileController extends Controller
     {
         if (Auth::guest())
             return view('auth.login');
+        $user = Auth::user();
+        $profile_id = $user->profile_id;
+        if ($profile_id == $id)
+        {
+            $profile = Profile::find($id);
+            $profile->race = $this->tradRace($profile->race);
 
-        $profile = Profile::find($id);
-        $profile->race = $this->tradRace($profile->race);
+            return view('profile/profile_edit')->with('profile', $profile);
+        }
+        else
+        {
+            abort(403, 'Erreur. Vous n\'êtes pas le propriétaire de ce profil!');
+        }
 
-        return view('profile/profile_edit')->with('profile', $profile);
     }
 
     /**
