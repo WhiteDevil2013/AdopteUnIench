@@ -78,7 +78,74 @@ class UserTest extends TestCase
             'race' => 'dog',
             'birthDate' => '1995-04-13'
         ]);
+    }
 
+    public function testUserUpdate()
+    {
+        $profile = Profile::create([
+            'username' => 'Blareach',
+            'isAnimal' => 0,
+            'race' => 'human',
+            'description' => 'Ceci est ma description',
+            'birthDate' => '1994-11-06',
+            'location' => 'Kremlin Bicetre',
+            'profilePicture' => __DIR__.'../Browser/photos/player_walk1.png',
+            'sex' => 0
+        ]);
+
+        $profile->push();
+
+        $user = User::create([
+            'name' => 'Lorris Saint-Genez',
+            'email' => 'saint-_l@epita.fr',
+            'password' => bcrypt('azerty'),
+            'profile_id' => $profile->id
+        ]);
+
+        $user->push();
+
+        $this->assertDatabaseHas('users', [
+            'name' => 'Lorris Saint-Genez',
+            'email' => 'saint-_l@epita.fr'
+        ]);
+
+        $user->update([
+            'name' => 'Jean-Lorris Saint-Genez',
+            'email' => 'lorris.saint-genez@epita.fr'
+        ]);
+
+        $profile->update([
+            'username' => 'asreach',
+            'race' =>  'red panda',
+            'isAnimal' => 1,
+            'sex' => 0,
+            'description' => 'nouvelle description',
+            'location' => 'Kremlin Bicetre',
+            'birthDate' => '1994-11-06',
+            'profilePicture' => $profile->profilePicture
+        ]);
+
+        $this->assertDatabaseMissing('users', [
+            'name' => 'Lorris Saint-Genez',
+            'email' => 'saint-_l@epita.fr'
+        ]);
+
+        $this->assertDatabaseHas('users', [
+            'name' => 'Jean-Lorris Saint-Genez',
+            'email' => 'lorris.saint-genez@epita.fr'
+        ]);
+
+        $this->assertDatabaseMissing('profiles', [
+            'username' => 'Blareach',
+            'race' => 'human'
+        ]);
+
+        $this->assertDatabaseHas('profiles', [
+            'username' => 'asreach',
+            'race' => 'red panda',
+            'isAnimal' => 1,
+            'description' => 'nouvelle description'
+        ]);
     }
 
 }
