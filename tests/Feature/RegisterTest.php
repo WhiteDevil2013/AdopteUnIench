@@ -19,10 +19,4 @@ class RegisterTest extends TestCase
         $this->assertTrue(true);
     }
 
-    public function testNewUserRegistration()
-    {
-        $this->get('/')
-             ->click('/login')
-             ->seePageIs('/login');
-    }
 }

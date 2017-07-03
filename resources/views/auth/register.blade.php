@@ -176,7 +176,7 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button id="register" name="register" type="submit" class="btn btn-primary">
                                     Créer le compte
                                 </button>
                             </div>
