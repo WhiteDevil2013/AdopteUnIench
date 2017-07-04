@@ -119,31 +119,45 @@ class ProfileController extends Controller
         if ($race == "human")
             $isAnimal = 0;
 
-        print(input::get('profilePicture'));
-        
-        $imgPath = $_FILES['profilePicture'];
-
-        $imgHandler = new ImageHandler();
-        if(preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",input::get('birthDate')) && $imgHandler->isImage($imgPath))
+        if(preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",input::get('birthDate')))
         {
-            $location = $imgHandler->updateImageOnDisk($imgPath, $profile->profilePicture);
+            if(!empty($_FILES['profilePicture']['name']))
+            {
+                $imgPath = $_FILES['profilePicture'];
+                $imgHandler = new ImageHandler();
+                if($imgHandler->isImage($imgPath))
+                {
+                    $location = $imgHandler->updateImageOnDisk($imgPath, $profile->profilePicture);
 
-            $profile->update([
-                'username' => input::get('username'),
-                'race' =>  input::get('race'),
-                'isAnimal' => $isAnimal,
-                'sex' => input::get('sex'),
-                'description' => input::get('description'),
-                'location' => input::get('location'),
-                'birthDate' => input::get('birthDate'),
-                'profilePicture' => $location
-            ]);
+                    $profile->update([
+                        'username' => input::get('username'),
+                        'race' =>  input::get('race'),
+                        'isAnimal' => $isAnimal,
+                        'sex' => input::get('sex'),
+                        'description' => input::get('description'),
+                        'location' => input::get('location'),
+                        'birthDate' => input::get('birthDate'),
+                        'profilePicture' => $location
+                    ]);
+                }
+            }
+            else
+            {
+                $profile->update([
+                    'username' => input::get('username'),
+                    'race' =>  input::get('race'),
+                    'isAnimal' => $isAnimal,
+                    'sex' => input::get('sex'),
+                    'description' => input::get('description'),
+                    'location' => input::get('location'),
+                    'birthDate' => input::get('birthDate'),
+                    'profilePicture' => $profile->profilePicture
+                ]);
+            }
 
             return redirect()->to('/profile');
         }
         return redirect()->to('/profile/edit');
-
-
     }
 
     /**
