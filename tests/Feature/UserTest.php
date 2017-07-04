@@ -59,7 +59,7 @@ class UserTest extends TestCase
             'profile_id' => $profile2->id
         ]);
 
-        $user1->push();
+        $user2->push();
 
         $this->assertDatabaseHas('users', [
             'email' => 'william.wakim@epita.fr',
