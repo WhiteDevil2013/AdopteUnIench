@@ -75,7 +75,7 @@ class PreferenceTest extends TestCase
 
         $this->assertDatabaseHas('preference_types', [
             'id' => $preferenceType1->id,
-            'race' => 'cat',
+            'race' => 'dog',
             'preference_id' => $preference->id
         ]);
 

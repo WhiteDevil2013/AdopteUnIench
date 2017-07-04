@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Input;
 
 class ProfileController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,6 +26,7 @@ class ProfileController extends Controller
     {
         if (Auth::guest())
             return view('auth.login');
+
         $user = Auth::user();
         $profile_id = $user->profile_id;
         $curProfile = Profile::findOrFail($profile_id);

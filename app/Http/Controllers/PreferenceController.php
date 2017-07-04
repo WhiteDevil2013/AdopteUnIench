@@ -12,10 +12,15 @@ use Illuminate\Support\Facades\Input;
 
 class PreferenceController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         if (Auth::guest())
-            return view('home');
+            return view('auth.login');
 
         $profile_id = User::find(Auth::user()->id)->profile_id;
         $profile = Profile::find($profile_id);
