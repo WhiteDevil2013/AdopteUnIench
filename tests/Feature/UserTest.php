@@ -4,6 +4,8 @@ namespace Tests\Feature;
 
 use AdopteUnIench\Profile;
 use AdopteUnIench\User;
+use AdopteUnIench\Preference;
+use AdopteUnIench\PreferenceType;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
