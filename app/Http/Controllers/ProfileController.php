@@ -212,11 +212,9 @@ class ProfileController extends Controller
         $notMatched = Match::where([['profile_id_1', $id], ['hasMatched', 0], ['profile_id_2', $profile_id]])->first();
 
         if (!empty($notMatched)) {
-            echo 'KOKO';
             Match::where([['profile_id_1', $id], ['hasMatched', 0], ['profile_id_2', $profile_id]])->update(array('hasMatched' => 1));
         }
         else {
-            echo 'OKOK';
             Match::create([
                 'profile_id_1' => $profile_id,
                 'profile_id_2' => $id,
