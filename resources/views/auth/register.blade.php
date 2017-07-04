@@ -164,7 +164,7 @@
                             <label for="profilePicture" class="col-md-4 control-label">Photo de profil</label>
 
                             <div class="col-md-6">
-                                <input type="file" id="profilePicture" class="form-control" name="profilePicture" value="{{ old('profilePicture') }}" required autofocus>
+                                <input type="file" id="profilePicture" class="form-control" name="profilePicture" required autofocus>
 
                                 @if ($errors->has('profilePicture'))
                                 <span class="help-block">

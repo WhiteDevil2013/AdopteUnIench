@@ -49,4 +49,26 @@ class ImageHandler
         Storage::disk('images')->put($imageName, $imageData);
         return $imageName;
     }
+
+    public function updateImageOnDisk($fileToUpload, $previousImgName)
+    {
+        $this->resizeImage($fileToUpload['tmp_name']);
+        $imageData = addslashes($fileToUpload['tmp_name']);
+        $imageData = file_get_contents($imageData);
+        $imageName = addslashes($fileToUpload['name']);
+        Storage::disk('images')->delete($previousImgName);
+        Storage::disk('images')->put($imageName, $imageData);
+        return $imageName;
+    }
+
+    public function isImage($imgPath)
+    {
+        $tmpName = $imgPath['tmp_name'];
+        switch (substr(mime_content_type($tmpName), 6))
+        {
+            case 'jpeg' || 'png' || 'gif' || 'bmp':
+                return true;
+        }
+        return false;
+    }
 }

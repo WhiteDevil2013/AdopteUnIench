@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <form method="POST" action="{{ route('profile') }}">
+            <form method="POST" action="{{ route('profile') }}" enctype="multipart/form-data">
                 <div class="panel panel-info">
                     <div class="panel-heading">
 
@@ -81,10 +81,28 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <img src="data:image/jpeg;base64,{{ base64_encode(Storage::disk('images')->get($profile->profilePicture)) }}"
-                                 alt="Profile Image" width="200" height="200" class="img-rounded">
+                        <!--                        <div class="col-md-4">-->
+                        <!--                            <img src="data:image/jpeg;base64,{{ base64_encode(Storage::disk('images')->get($profile->profilePicture)) }}"-->
+                        <!--                                 alt="Profile Image" width="200" height="200" class="img-rounded">-->
+                        <!--                        </div>-->
+
+                        <div class="col-md-4 form-group{{ $errors->has('profilePicture') ? ' has-error' : '' }}">
+                            <label for="profilePicture" class="control-label">Photo de profil</label>
+
+                            <div>
+                                <img src="data:image/jpeg;base64,{{ base64_encode(Storage::disk('images')->get($profile->profilePicture)) }}"
+                                     alt="Profile Image" width="200" height="200" class="img-rounded">
+
+                                <input type="file" id="profilePicture" class="form-control" name="profilePicture" value="{{ old('profilePicture') }}" autofocus>
+
+                                @if ($errors->has('profilePicture'))
+                                <span class="help-block">
+                                        <strong>{{ $errors->first('profilePicture') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
                         </div>
+
                         <div class="col-md-12" style="justify-content: center; display:flex;">
                             <button type="submit" class="btn btn-success" style="margin-right: 10px;">Valider</button>
                             <button type="button" class="btn btn-warning" onclick='window.location="{{ route("profile") }}"'>Retour</button>

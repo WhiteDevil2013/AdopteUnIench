@@ -2,6 +2,7 @@
 
 namespace AdopteUnIench\Http\Controllers;
 
+use AdopteUnIench\Http\ImageHandler;
 use AdopteUnIench\Match;
 use AdopteUnIench\Profile;
 
@@ -111,8 +112,15 @@ class ProfileController extends Controller
         if ($race == "human")
             $isAnimal = 0;
 
-        if(preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",input::get('birthDate')))
+        print(input::get('profilePicture'));
+        
+        $imgPath = $_FILES['profilePicture'];
+
+        $imgHandler = new ImageHandler();
+        if(preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",input::get('birthDate')) && $imgHandler->isImage($imgPath))
         {
+            $location = $imgHandler->updateImageOnDisk($imgPath, $profile->profilePicture);
+
             $profile->update([
                 'username' => input::get('username'),
                 'race' =>  input::get('race'),
@@ -121,7 +129,7 @@ class ProfileController extends Controller
                 'description' => input::get('description'),
                 'location' => input::get('location'),
                 'birthDate' => input::get('birthDate'),
-                'profilePicture' => $profile->profilePicture
+                'profilePicture' => $location
             ]);
 
             return redirect()->to('/profile');
