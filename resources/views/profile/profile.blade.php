@@ -38,7 +38,43 @@
                         @else
                             <p>Né le {{ $profile->birthDate }}</p>
                         @endif
+                        <br />
+                        @if($profile->id != $user_profile_id)
+                        <div class="row">
+                            <div class="col-md-2">
+                                @if (in_array($profile->id, $notMatched))
+                                <form method="POST" action="{{ route('deleteMatch',  $profile->id) }}" enctype="multipart/form-data">
+                                    {{ csrf_field() }}
+                                    <button type="submit" class="btn btn-warning">
+                                        En attente de match !
+                                    </button>
+                                </form>
+                                @else
+                                @if (in_array($profile->id, $matches))
+                                <form class="form-horizontal" method="GET" action="{{ route('discuss') }}" enctype="multipart/form-data">
+                                    {{ csrf_field() }}
+
+                                    <input type="hidden" name="profile_id" id="profile_id" value="{{ $profile->id }}">
+
+                                    <button type="submit" class="btn btn-success">
+                                        Discuter
+                                    </button>
+                                </form>
+                                @else
+                                <form method="POST" action="{{ route('profileMatch',  $profile->id) }}" enctype="multipart/form-data">
+                                    {{ csrf_field() }}
+                                    <button type="submit" class="btn btn-info">
+                                        Matcher
+                                    </button>
+                                </form>
+                                @endif
+                                @endif
+                            </div>
+                        </div>
+                        @endif
+
                     </div>
+
                     <div class="col-md-4">
                         <img src="data:image/jpeg;base64,{{ base64_encode(Storage::disk('images')->get($profile->profilePicture)) }}"
                              alt="Profile Image" width="200" height="200" class="img-rounded">

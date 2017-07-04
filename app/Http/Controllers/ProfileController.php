@@ -77,7 +77,13 @@ class ProfileController extends Controller
             $profile = Profile::find($id);
             $profile->race = $this->tradRace($profile->race);
 
-            return view('profile/profile')->with(['profile' => $profile, 'user_profile_id' => $profile_id]);
+            $notMatched = Match::where([['profile_id_1', Auth::user()->profile_id], ['hasMatched', 0]])->pluck('profile_id_2')->toArray();
+            $matched_1 = Match::where([['profile_id_1', Auth::user()->profile_id], ['hasMatched', 1]])->pluck('profile_id_2')->toArray();
+            $matched_2 = Match::where([['profile_id_2', Auth::user()->profile_id], ['hasMatched', 1]])->pluck('profile_id_1')->toArray();
+
+            $matches = array_merge($matched_1, $matched_2);
+
+            return view('profile/profile')->with(['profile' => $profile, 'user_profile_id' => $profile_id, 'notMatched' => $notMatched, 'matches' => $matches]);
         }
 
     }
